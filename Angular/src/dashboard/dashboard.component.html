@@ -1,0 +1,211 @@
+<div class="root">
+  <p-toast></p-toast>
+  <div class="header d-flex">
+    <h1 class="header--title"> Dashboard</h1>
+    <nav class="d-flex navigator ">
+      <button mat-raised-button routerLink="/Dashboard/myschedules" matTooltip="View all your schedules" matTooltipPosition="below"> All Schedules</button>
+      <button mat-raised-button *ngIf="currentEmployeeRole === 'admin'" routerLink="/Dashboard/manageschedules" matTooltip="Manage all schedules" matTooltipPosition="below" >Manage
+        Schedules</button>
+      <button mat-raised-button *ngIf="currentEmployeeRole === 'admin'" (click)="broadcastMessage()" matTooltip="Broadcast a new message" matTooltipPosition="below">
+
+        <span class="material-symbols-outlined">
+          campaign
+        </span>
+      </button>
+      
+    </nav>
+  </div>
+
+  <div class="main d-flex flex-row g-20">
+    <div class="employee-container">
+      <p-card class="employee-container--details">
+        <ng-template pTemplate="header" class=" p-card-header--admin flex-col">
+          <div [class.p-card-header--admin]="currentEmployeeRole === 'admin'" [class.p-card-header--employee]="currentEmployeeRole === 'employee'" class="flex-col">
+          <h1>{{ myDetails.name }}</h1>
+          <span>{{ myDetails.empID }}</span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <p><b>Role:</b> {{ currentEmployeeRole === 'admin' ? 'Admin' : 'Employee' }}</p>
+          <p><b>Email: </b>{{ myDetails.email }}</p>
+          <p><b>Phone: </b>{{ myDetails.phone }}</p>
+          <p>
+            <button class="logout--button" mat-raised-button (click)="userLogout()" matTooltip="Logout" matTooltipPosition="below">
+
+              <span class="material-symbols-outlined">
+                logout
+              </span></button>
+          </p>
+        </ng-template>
+      </p-card>
+    </div>
+    <div class="broadcast" >
+      <p-card>
+        <ng-template pTemplate="header " class="  broadcast--header">
+          <h3>My Schedules</h3>
+          <div class="header--labels d-flex ">
+            <div class="labels--yellow-square d-flex "></div>
+            <span>Day Shift</span>
+            <span class="material-symbols-outlined">
+              partly_cloudy_night
+              </span>
+          </div>
+          <div class="header--labels d-flex ">
+            <div class="labels--blue-square "></div>
+            <span>Night Shift</span>
+            <span class="material-symbols-outlined">
+              sunny
+              </span>
+          </div>
+        
+          <app-calendar class="custom-calendar"></app-calendar>
+            </ng-template>
+      </p-card>
+    </div>
+    <div class="employee-container--pending-requests" *ngIf="currentEmployeeRole === 'admin'">
+      <h1> Pending Requests </h1>
+      <div class="content--main">
+        <p-table #dt1 [value]="pendingRequests" [paginator]="true" [rows]="5"
+          styleClass="p-datatable-gridlines p-datatable-striped custom-scrollbar" [showCurrentPageReport]="true"
+          [tableStyle]="{ 'max-width': '100px', 'width': '100%' }"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5, 10, 20]"
+          [globalFilterFields]="['empID', 'name', 'shifterempid', 'date', 'shift', 'Action']">
+          <ng-template pTemplate="caption">
+            <div class="ccaption">
+              <button pButton label="Clear" class="p-button-outlined " icon="pi pi-filter-slash"
+                (click)="clear(dt1)"></button>
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value,'contains')"
+                  placeholder="Search any keyword" />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header" class="flex align-items-center">
+            <tr>
+              <th style="min-width:10rem" pSortableColumn="empID" class="flex align-items-center">
+                <div class="header--main">
+                  Requester EmpID
+                  <p-columnFilter type="text" field="empID" display="menu"></p-columnFilter>
+    
+                  <p-sortIcon field="empID"></p-sortIcon>
+                </div>
+              </th>
+              <th style="min-width:10rem" pSortableColumn="name">
+                <div class="header--main">
+                  Requester Name 
+                  <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+    
+                  <p-sortIcon field="name"></p-sortIcon>
+                </div>
+              </th>
+              <th style="min-width:10rem" pSortableColumn="shifterempid">
+                <div class="header--main">
+                  Swap EmpID 
+                  <p-columnFilter type="text" field="shifterempid" display="menu"></p-columnFilter>
+    
+                  <p-sortIcon field="shifterempid"></p-sortIcon>
+                </div>
+              </th>
+             
+              <th style="min-width:8rem" pSortableColumn="date">
+                <div class="header--main">
+                  Date
+                  <p-columnFilter type="text" field="date" display="menu"></p-columnFilter>
+    
+                  <p-sortIcon field="date"></p-sortIcon>
+                </div>
+              </th>
+              <th style="min-width:8rem" pSortableColumn="shift">
+                <div class="header--main">
+                  Shift
+                  <p-columnFilter type="text" field="shift" display="menu"></p-columnFilter>
+    
+                  <p-sortIcon field="shift"></p-sortIcon>
+                </div>
+              </th>
+              
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-schedule>
+            <tr>
+              <td>{{ schedule.empID }}</td>
+              <td>{{ schedule.name }}</td>
+              <td>{{ schedule.shifterempid }}</td>
+              <td [ngStyle]="{'background-color': schedule.shift === 'Night' ? '#9595dc' : '#efef65'}">{{ schedule.shift }}</td>
+              <td>{{ schedule.date }}</td>
+              
+    
+              <td>
+                <button pButton type="button" icon="pi pi-check" (click)="acceptSwap(schedule)" pTooltip="Accept" tooltipPosition="bottom" ></button>
+              </td>
+              <td>
+                <button pButton type="button" icon="pi pi-times" (click)="rejectSwap(schedule)" pTooltip="Reject" tooltipPosition="bottom"></button>
+              </td>
+            
+            </tr>
+          </ng-template>
+    
+        </p-table>
+    
+      </div>
+    </div>
+
+
+    <div class="" *ngIf="currentEmployeeRole === 'employee'">
+      <h1> Broadcast Messages </h1>
+      <div class="content--main"       class="main--message">
+        <p-table #dt1 [value]="messages" [paginator]="true" [rows]="5"
+          styleClass="  p-datatable-gridlines p-datatable-striped  " [showCurrentPageReport]="true"
+          [tableStyle]="{ 'max-width': '500px', 'width': '100%' }"
+    
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[5, 10, 20]"
+          [globalFilterFields]="['mesagesValue']">
+          <ng-template pTemplate="caption">
+            <div class="ccaption">
+              <button pButton label="Clear" class="p-button-outlined " icon="pi pi-filter-slash"
+                (click)="clear(dt1)"></button>
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value,'contains')"
+                  placeholder="Search any keyword" />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header" class="flex align-items-center">
+            <tr>
+              <th style="min-width:10rem" pSortableColumn="Message" class="flex align-items-center">
+                <div class="header--main">
+                  Message
+                  <p-columnFilter type="text" field="Message" display="menu"></p-columnFilter>
+    
+                  <p-sortIcon field="Message"></p-sortIcon>
+                </div>
+              
+              
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-Message>
+            <tr >
+              <td > <a class="d-flex text-align text-overflow" [matTooltip]="Message.mesagesValue"> 
+
+                {{ Message.mesagesValue}}
+              </a>
+            </td>
+           
+    
+              <td>
+                <button pButton type="button" icon="pi pi-verified" pTooltip="Mark as Read" tooltipPosition="bottom" (click)="markAsRead(Message)"></button>
+
+              </td>
+             
+            
+            </tr>
+          </ng-template>
+    
+        </p-table>
+    
+      </div>
+    </div>
+  </div>
+</div>

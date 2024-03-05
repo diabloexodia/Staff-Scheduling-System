@@ -1,0 +1,61 @@
+<div class="newprofile">
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+        <h2>New Profile</h2>
+        <span class="material-symbols-outlined">account_circle</span>
+    </div>
+
+    <form [formGroup]="profileForm" class="p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-4 flex-gap">
+
+
+            <span class="p-float-label p-input-icon-left">
+                <i class="pi pi-user"></i>
+                <input type="text" formControlName="EmpID" pInputText (focus)="showOverlayPanel($event)">
+                <label for="EmpID">Employee ID</label>
+                <p-overlayPanel #op class ="overlaypanel">
+                    
+                    <ng-template pTemplate="overlaypanel--content">
+                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                            <li>Must be of the form EMPXXXXX</li>
+                        
+                        </ul>
+                    </ng-template>
+                </p-overlayPanel>
+            </span>
+          
+            <span class="p-float-label p-input-icon-left">
+                <i class="pi pi-user-edit"></i>
+                <input type="text" formControlName="Name" pInputText>
+                <label for="Name">Employee Name</label>
+       
+            </span>
+            <span class="p-float-label">
+                <p-dropdown formControlName="Role" [options]="roleOptions"></p-dropdown>
+                <label>Employee Role</label>
+              </span>
+            <span class="p-float-label p-input-icon-left">
+                <i class="pi pi-inbox"></i>
+                <input type="text" formControlName="Email" pInputText>
+                <label for="Email">Employee Email</label>
+   
+            </span>
+            <span class="p-float-label p-input-icon-left">
+                <i class="pi pi-phone"></i>
+                <input type="text" formControlName="Phone" pInputText>
+                <label for="Phone">Employee Phone</label>
+               
+            </span>
+        </div>
+
+        <div class="buttonclass">
+            <button mat-raised-button [disabled]="profileForm.invalid" (click)="confirmDialog()">
+                <i class="pi pi-check" style="font-size: 2rem; color: green;"></i>
+            </button>
+            <button mat-raised-button (click)="closeDialog()">
+                <i class="pi pi-times" style="font-size: 2rem; color: Red;"></i>
+            </button>
+        </div>
+    </form>
+   
+</div>

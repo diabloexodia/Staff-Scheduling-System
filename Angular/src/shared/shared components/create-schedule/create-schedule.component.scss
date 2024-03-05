@@ -1,0 +1,33 @@
+// .schedule-form{
+//     gap:2%;
+   
+// }
+
+// .newprofile{
+
+//     height: 600px !important;
+// }
+
+
+.schedule-form {
+    width: fit-content;
+    display: flex;
+    height: 390px;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Adjust the gap as needed */
+   }
+   
+   .form-row {
+    display: flex;
+    justify-content: space-between; /* This will arrange the fields width-wise */
+    gap: 10px; /* Adjust the gap between fields as needed */
+   }
+
+ .schedule--form--header{
+    display: flex !important;
+    justify-self: center !important;
+    align-self: center;
+   }
+   
+

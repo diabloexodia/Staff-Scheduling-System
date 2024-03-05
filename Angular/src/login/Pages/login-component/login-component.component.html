@@ -1,0 +1,32 @@
+<div class="container">
+	<div class="screen">
+		<p-toast></p-toast>
+	  <div class="screen__content">
+		<form class="login" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+		  <div class="login__field">
+			<mat-icon class="login__icon">person</mat-icon>
+			<mat-form-field>
+			  <input matInput placeholder="Employee ID" id="empID" formControlName="username" matTooltip="Should be of the form EMPXXXXX" matTooltipPosition="below">
+			</mat-form-field>
+		  </div>
+		  <div class="login__field">
+			<mat-icon class="login__icon">lock</mat-icon>
+			<mat-form-field>
+			  <input matInput type="password" placeholder="Password" id="password" formControlName="password">
+			</mat-form-field>
+		  </div>
+		  <button mat-raised-button class="button login__submit" type="submit" [disabled]="loginForm.invalid">
+			<span class="button__text">Log In Now</span>
+		  </button>
+		
+		</form>
+		<h2 class="screen__content__title"> Staff Scheduling Application</h2>
+	  </div>
+	  <div class="screen__background">
+		<span class="screen__background__shape screen__background__shape4"></span>
+		<span class="screen__background__shape screen__background__shape3"></span>
+		<span class="screen__background__shape screen__background__shape2"></span>
+		<span class="screen__background__shape screen__background__shape1"></span>
+	  </div>
+	</div>
+  </div>

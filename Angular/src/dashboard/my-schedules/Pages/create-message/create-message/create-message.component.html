@@ -1,0 +1,24 @@
+<div class="messagebox ">
+    <h2>New Broacast Message</h2>
+   
+    <!-- <div class="p-fluid p-grid">
+      <div class="p-field p-col-12 p-md-4">
+        <span class="p-float-label">
+          <input type="text" id="inputtext" pInputText [(ngModel)]="message" />
+          <label for="inputtext">Message</label>
+        </span>
+      </div> -->
+      <!--Use this in login page-->
+<div class="card flex justify-content-center">
+  <textarea rows="5" cols="45" pInputTextarea [(ngModel)]="message"></textarea>
+</div>
+
+
+    <br>
+    <div class="buttonclass d-flex align-items-center">
+      <button mat-raised-button  (click)="closeDialog()">
+       
+        <i class="pi pi-check" style="font-size: 2rem ; color: green;" ></i></button> 
+    </div>
+ 
+  </div>

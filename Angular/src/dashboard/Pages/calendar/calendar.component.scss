@@ -1,0 +1,10 @@
+::ng-deep .mat-calendar-body-cell.marked-date-day {
+  background-color: #efef65 !important;
+  color: black !important;
+ }
+ 
+ ::ng-deep .mat-calendar-body-cell.marked-date-night {
+  background-color: #9595dc !important;
+  color: white !important;
+ }
+

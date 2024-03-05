@@ -1,0 +1,30 @@
+.content{
+    display:flex ;
+    flex-direction: column;
+     gap:20px;
+ }
+ .content--header{
+     display:flex ;
+     justify-content: space-around;
+     align-items: center;
+ }
+ .content--header--buttons{
+     display:flex;
+     justify-content: space-around;
+     gap: 5px;
+ }
+ .mat-raised{
+     width: fit-content !important;
+ }
+ .content--main{
+     width: 100%;
+ }
+ .ccaption{
+     display: flex !important;
+     justify-content: space-between !important;
+ }
+ 
+ .header--main{
+     display: flex !important;
+     justify-content: space-between !important;
+ }

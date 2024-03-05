@@ -1,0 +1,100 @@
+<div class="main d-flex flex-row">
+
+<div class="content--main">
+  <p-table
+    #dt1
+    [value]="mySchedule"
+    [paginator]="true"
+    [rows]="5"
+    styleClass="p-datatable-gridlines p-datatable-striped"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '2px' }"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [globalFilterFields]="['empID', 'name', 'job_Role', 'date', 'shift', 'location', 'start_Time', 'end_Time']" 
+>
+  <ng-template pTemplate="caption" >
+    <div class="ccaption" >
+        <button pButton label="Clear" class="p-button-outlined " icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+        <span class="p-input-icon-left ml-auto">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value,'contains')" placeholder="Search any keyword" />
+        </span>
+    </div>
+</ng-template>
+    <ng-template pTemplate="header" class="flex">
+      <tr>
+      
+    <th style="min-width:8rem" pSortableColumn="job_Role" >
+      <div class="header--main">
+          Job
+          <p-columnFilter type="text" field="job_Role" display="menu"></p-columnFilter>
+         
+          <p-sortIcon field="job_Role"></p-sortIcon>
+      </div>
+  </th>
+  <th style="min-width:8rem" pSortableColumn="date" >
+    <div class="header--main">
+        Date
+        <p-columnFilter type="text" field="date" display="menu"></p-columnFilter>
+       
+        <p-sortIcon field="date"></p-sortIcon>
+    </div>
+</th>
+<th style="min-width:8rem" pSortableColumn="shift" >
+  <div class="header--main">
+      Shift
+      <p-columnFilter type="text" field="shift" display="menu"></p-columnFilter>
+     
+      <p-sortIcon field="shift"></p-sortIcon>
+  </div>
+</th>
+<th style="min-width:10rem" pSortableColumn="location" >
+  <div class="header--main">
+      Location
+      <p-columnFilter type="text" field="location" display="menu"></p-columnFilter>
+     
+      <p-sortIcon field="location"></p-sortIcon>
+  </div>
+</th>
+
+
+
+  <th  pSortableColumn="start_Time" style="width:9rem" >Start Time <p-sortIcon field="start_Time"></p-sortIcon></th>
+
+        <th pSortableColumn="end_Time" style="width:9rem">End Time <p-sortIcon field="end_Time"></p-sortIcon></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-schedule>
+      <tr>
+     
+        <td>{{ schedule.job_Role }}</td>
+        <td>{{ schedule.date }}</td>
+        <td [ngStyle]="{'background-color': schedule.shift === 'Night' ? '#9595dc' : '#efef65'}">{{ schedule.shift }}</td>
+        <td>{{ schedule.location }}</td>
+        <td>{{ schedule.start_Time }}</td>
+        <td>{{ schedule.end_Time }}</td>
+        
+          <!-- <td>
+            <button pButton type="button"  icon="pi pi-trash" (click)="deleteSchedule(schedule)"></button>
+          </td>
+            <td>
+
+              <button pButton type="button"  icon="pi pi-pencil" (click)="updateSchedule(schedule)"></button>
+            </td>
+          -->
+
+        
+      </tr>
+    </ng-template>
+
+  </p-table>
+
+</div>
+
+
+
+
+</div>
+
+

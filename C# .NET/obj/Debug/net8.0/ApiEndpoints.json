@@ -1,0 +1,370 @@
+[
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.ScheduleController",
+    "Method": "acceptSwap",
+    "RelativePath": "acceptSwap",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "swaprequestForm",
+        "Type": "Staff_Scheduler_Backend.Models.requestForm",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.EmployeeController",
+    "Method": "GetEmployeeDetails",
+    "RelativePath": "employees",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Staff_Scheduler_Backend.Models.EmployeeDetails, Staff_Scheduler_Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.EmployeeController",
+    "Method": "GetEmployeeDetailsById",
+    "RelativePath": "employees/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Staff_Scheduler_Backend.Models.EmployeeDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.CommunicationController",
+    "Method": "getAllMessages",
+    "RelativePath": "getMessages",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.CommunicationController",
+    "Method": "getPendingRequests",
+    "RelativePath": "getPendingRequests",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Staff_Scheduler_Backend.Models.requestForm, Staff_Scheduler_Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.CommunicationController",
+    "Method": "PostMessage",
+    "RelativePath": "latestBroadCastMessage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "payload",
+        "Type": "Staff_Scheduler_Backend.Models.messageModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.EmployeeController",
+    "Method": "Login",
+    "RelativePath": "login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Staff_Scheduler_Backend.Models.loginModelForm",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.EmployeeController",
+    "Method": "CreateNewEmployee",
+    "RelativePath": "newEmployeeProfile",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newEmployeeData",
+        "Type": "Staff_Scheduler_Backend.Models.EmployeeDetails",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.ScheduleController",
+    "Method": "CreateSchedule",
+    "RelativePath": "newSchedule",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "schedule",
+        "Type": "Staff_Scheduler_Backend.Models.ScheduleDetails",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.ScheduleController",
+    "Method": "rejectSwap",
+    "RelativePath": "rejectSwap",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "swaprequestForm",
+        "Type": "Staff_Scheduler_Backend.Models.requestForm",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.ScheduleController",
+    "Method": "requestSwap",
+    "RelativePath": "requestSwap",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Staff_Scheduler_Backend.Models.requestForm",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.ScheduleController",
+    "Method": "GetScheduleDetails",
+    "RelativePath": "schedules",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Staff_Scheduler_Backend.Models.ScheduleDetails, Staff_Scheduler_Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.ScheduleController",
+    "Method": "deleteSchedule",
+    "RelativePath": "schedules/deleteSchedule",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scheduleDetails",
+        "Type": "Staff_Scheduler_Backend.Models.ScheduleDetails",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.ScheduleController",
+    "Method": "GetScheduleDetailsById",
+    "RelativePath": "schedules/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Staff_Scheduler_Backend.Models.ScheduleDetails, Staff_Scheduler_Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.EmployeeController",
+    "Method": "GetTodaysSchedule",
+    "RelativePath": "swapSchedule/{empid}/{date}/{shift}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "empid",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "date",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "shift",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Staff_Scheduler_Backend.Models.ScheduleDetails, Staff_Scheduler_Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.EmployeeController",
+    "Method": "GetEmployeeDetails",
+    "RelativePath": "todaysSchedule/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Staff_Scheduler_Backend.Models.todaysSchedule, Staff_Scheduler_Backend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Staff_Scheduler_Backend.Controllers.ScheduleController",
+    "Method": "UpdateSchedule",
+    "RelativePath": "updateSchedule",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scheduleDetails",
+        "Type": "Staff_Scheduler_Backend.Models.ScheduleDetails",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]
