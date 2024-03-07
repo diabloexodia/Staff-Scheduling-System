@@ -33,7 +33,7 @@ export class MySchedulesComponent {
 
   getSchedule(id:string) {
     this.schedulingService.getSchedule(id).subscribe((data:scheduleDetails[]) => {
-      console.log(data);
+   
       this.mySchedule = data;
     });
   }

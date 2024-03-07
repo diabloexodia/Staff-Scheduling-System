@@ -49,7 +49,7 @@ export class EmployeeService {
               this.currentEmployeeRole = role;
               this.currentEmployeeId = logindata.username;
               sessionStorage.setItem('jwtToken', this.jwttoken); // Store the token in session storage
-              console.log(this.currentEmployeeRole);
+            
             }
             return response;
           } else {
@@ -66,7 +66,7 @@ export class EmployeeService {
     Email: string;
     Phone: string;
   }) {
-    console.log(newEmployeeData);
+
 
     return this.http.post<string>(
       'https://localhost:7023/newEmployeeProfile',

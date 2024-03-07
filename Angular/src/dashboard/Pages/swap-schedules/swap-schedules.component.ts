@@ -41,8 +41,6 @@ export class SwapSchedulesComponent implements OnInit {
   }
 
   showLifeLong(displayedMessage: string, type: boolean) {
-    //  console.log("here inside toast");
-
     if (type == true)
       this.messageService.add({
         severity: 'success',

@@ -1,0 +1,61 @@
+.card {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+
+    margin-bottom: 20px;
+  }
+  
+  .card:hover {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  }
+  .navigator{
+    display: flex;
+    gap: 10px;
+  }
+  .card-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  
+  .shift-card, .job-role-card, .location-card {
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .shift-card:hover, .job-role-card:hover, .location-card:hover {
+    background-color: #857eb7;
+  }
+
+ 
+ 
+  .header{
+    background-color: #f4eeee;
+    justify-content: space-around;
+    gap: 10px;
+  }
+
+
+
+  .d-flex{
+    display: flex;
+    align-items: center;
+  }
+  .flex-col{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+.justify-evenly{
+  justify-content: space-evenly;
+}
+
+.barchart{
+    width: 500px !important;
+    height : 50px !important;
+}
+

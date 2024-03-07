@@ -1,12 +1,14 @@
 <div class="root">
   <p-toast></p-toast>
+  <p-confirmDialog></p-confirmDialog>
+
   <div class="header d-flex">
     <h1 class="header--title"> Dashboard</h1>
     <nav class="d-flex navigator ">
       <button mat-raised-button routerLink="/Dashboard/myschedules" matTooltip="View all your schedules" matTooltipPosition="below"> All Schedules</button>
       <button mat-raised-button *ngIf="currentEmployeeRole === 'admin'" routerLink="/Dashboard/manageschedules" matTooltip="Manage all schedules" matTooltipPosition="below" >Manage
         Schedules</button>
-      <button mat-raised-button *ngIf="currentEmployeeRole === 'admin'" (click)="broadcastMessage()" matTooltip="Broadcast a new message" matTooltipPosition="below">
+         <button mat-raised-button *ngIf="currentEmployeeRole === 'admin'" (click)="broadcastMessage()" matTooltip="Broadcast a new message" matTooltipPosition="below">
 
         <span class="material-symbols-outlined">
           campaign
@@ -31,7 +33,7 @@
           <p><b>Phone: </b>{{ myDetails.phone }}</p>
           <p>
             <button class="logout--button" mat-raised-button (click)="userLogout()" matTooltip="Logout" matTooltipPosition="below">
-
+               
               <span class="material-symbols-outlined">
                 logout
               </span></button>
@@ -65,6 +67,43 @@
     <div class="employee-container--pending-requests" *ngIf="currentEmployeeRole === 'admin'">
       <h1> Pending Requests </h1>
       <div class="content--main">
+
+        <div *ngIf="pendingRequests.length == 0">
+          <div class="animated-card">
+           
+             <p>No pending swap requests at this time.</p>
+             <svg viewBox="0 0 70 100" width="70" height="100">
+              <defs>
+                <!-- path describing the outline of the hourglass -->
+                <path id="hourglass" d="M 5 5 h 60 q 0 22.5 -28 45 28 22.5 28 45 h -60 q 0 -22.5 28 -45 -28 -22.5 -28 -45z" />
+                <!-- create a clip with the outline of the paragraph -->
+                <clipPath id="clip--hourglass">
+                  <use href="#hourglass" />
+                </clipPath>
+              </defs>
+              <!-- rectangle translated toward the bottom
+              clipped to show only the element within the boundaries of the hourglass
+              -->
+              <g clip-path="url(#clip--hourglass)">
+                <rect id="sand" width="70" height="50" fill="hsl(210, 40%, 20%)" stroke="none" />
+              </g>
+              <!-- drawing using the outline of the hourglass and other elements to depict a stylish time-keeper -->
+              <g stroke="hsl(240, 15%, 5%)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <use href="#hourglass" />
+                <path d="M 5 5 v 90" />
+                <path d="M 65 5 v 90" />
+              </g>
+              <g fill="hsl(240, 15%, 5%)" stroke="none">
+                <rect width="70" height="5" />
+                <rect width="70" height="5" y="95" />
+                <circle r="5" cx="5" cy="50" />
+                <circle r="5" cx="65" cy="50" />
+              </g>
+            </svg>
+          </div>
+         </div>
+         <div ></div>
+        <div *ngIf="pendingRequests.length > 0" >
         <p-table #dt1 [value]="pendingRequests" [paginator]="true" [rows]="5"
           styleClass="p-datatable-gridlines p-datatable-striped custom-scrollbar" [showCurrentPageReport]="true"
           [tableStyle]="{ 'max-width': '100px', 'width': '100%' }"
@@ -147,7 +186,7 @@
           </ng-template>
     
         </p-table>
-    
+      </div>
       </div>
     </div>
 
@@ -195,7 +234,7 @@
            
     
               <td>
-                <button pButton type="button" icon="pi pi-verified" pTooltip="Mark as Read" tooltipPosition="bottom" (click)="markAsRead(Message)"></button>
+                <button class = "markasread "pButton type="button" icon="pi pi-verified" pTooltip="Mark as Read" tooltipPosition="bottom" (click)="markAsRead(Message)"></button>
 
               </td>
              

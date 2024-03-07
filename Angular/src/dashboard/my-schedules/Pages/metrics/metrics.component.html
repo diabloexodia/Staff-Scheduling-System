@@ -1,0 +1,56 @@
+<div class="header d-flex">
+    <h1 class="header--title"> Report and Analysis</h1>
+    <nav class="d-flex navigator ">
+        <button mat-raised-button (click)="monthc()" >Monthly Report</button>
+        <button mat-raised-button (click)="downloadCSV()" [disabled]="!csvDataReady">Download Report</button>
+    </nav>
+
+
+</div>
+<div class="container">
+
+    <div class="barclass">
+        <p-chart class=" barchart " type="bar" [data]="data" [options]="options" *ngIf="condition"></p-chart>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <h3 (click)="toggleDetails('shift')">Employees Working in Each Shift:</h3>
+                <div class="card-content" *ngIf="showShiftDetails">
+                    <div *ngFor="let shift of getKeys(shiftCounts)" class="shift-card"
+                        [matTooltip]="getEmployeesByShift(shift)">
+                        <h4>{{ shift }}</h4>
+                        <p>No Of Employees: {{ shiftCounts[shift] }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <h3 (click)="toggleDetails('jobRole')">Employees in Each Job Role:</h3>
+                <div class="card-content" *ngIf="showJobRoleDetails">
+                    <div *ngFor="let jobRole of getKeys(jobRoleCounts)" class="job-role-card"
+                        [matTooltip]="getEmployeesByJobRole(jobRole)">
+                        <h4>{{ jobRole }}</h4>
+                        <p>No Of Employees: {{ jobRoleCounts[jobRole] }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <h3 (click)="toggleDetails('location')">Employees in Each Location:</h3>
+                <div class="card-content" *ngIf="showLocationDetails">
+                    <div *ngFor="let location of getKeys(locationCounts)" class="location-card"
+                        [matTooltip]="getEmployeesByLocation(location)">
+                        <h4>{{ location }}</h4>
+                        <p>No Of Employees: {{ locationCounts[location] }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

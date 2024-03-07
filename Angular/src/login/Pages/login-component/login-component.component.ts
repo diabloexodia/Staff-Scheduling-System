@@ -29,7 +29,7 @@ export class LoginComponentComponent {
   ngOnInit() {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.pattern('^EMP\\d{5}$')]],
-      password: ['',Validators.required],
+      password: ['', Validators.required],
     });
     this.jwttoken = '';
   }
@@ -38,19 +38,16 @@ export class LoginComponentComponent {
       .validateEmployee(logindata)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-         // console.log( "the " ,error.status);
-          if(error.status == 401){
-
+       
+          if (error.status == 401) {
             this.showLifeLong('Invalid user.', false);
-          }
-          else
-          this.showLifeLong('Server error. Try again later.', false);
+          } else this.showLifeLong('Server error. Try again later.', false);
           return of(error);
         })
       )
       .subscribe((result) => {
         if (result.status == 200) {
-          this.showLifeLong("Logged in successfully !", true);
+          this.showLifeLong('Logged in successfully !', true);
 
           setTimeout(() => {
             this.router.navigate(['Dashboard']);
@@ -59,8 +56,6 @@ export class LoginComponentComponent {
       });
   }
   showLifeLong(displayedMessage: string, type: boolean) {
-    // console.log("here inside toast");
-
     if (type == true)
       this.messageService.add({
         severity: 'success',

@@ -22,7 +22,7 @@ import { ChipModule } from 'primeng/chip';
 import { ChipsModule } from 'primeng/chips';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmPopup, ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
@@ -51,7 +51,7 @@ import { SwapSchedulesComponent } from './Pages/swap-schedules/swap-schedules.co
     ToastModule,
     MatNativeDateModule,
     MatInputModule,
-    MatDatepickerModule,
+    MatDatepickerModule,ConfirmPopupModule,ConfirmDialogModule
     
   ],
 })

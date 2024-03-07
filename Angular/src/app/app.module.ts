@@ -9,6 +9,7 @@ import {  CardModule } from 'primeng/card';
 import { DashboardModule } from 'src/dashboard/dashboard.module';
 import { AuthInterceptor } from './auth.interceptor'; 
 import { MatTooltipModule } from '@angular/material/tooltip';
+
 @NgModule({
   declarations: [
     AppComponent

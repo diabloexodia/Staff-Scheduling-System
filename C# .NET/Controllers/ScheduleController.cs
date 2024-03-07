@@ -40,25 +40,25 @@ namespace Staff_Scheduler_Backend.Controllers
             return Ok(scheduleList);
         }
 
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [Route("/newSchedule")]
-        public ActionResult<string> CreateSchedule([FromBody] ScheduleDetails schedule)
+        public IActionResult CreateSchedule([FromBody] ScheduleDetails schedule)
         {
             //Implement code to add the schedule details to the schedule_master table
             //Example code to add the details using the service
        
             if (1 == _employeeService.addScheduleDetails(schedule))
-                return Ok();
+                return Ok(new { message = "success" });
             else
-                return BadRequest();
+                return Ok(new { message = "failure" });
 
         }
 
         [Authorize(Roles = "admin")]
         [HttpPut]
         [Route("/updateSchedule")]
-        public ActionResult<string> UpdateSchedule([FromBody] ScheduleDetails scheduleDetails)
+        public IActionResult UpdateSchedule([FromBody] ScheduleDetails scheduleDetails)
         {
             try
             {
@@ -67,11 +67,11 @@ namespace Staff_Scheduler_Backend.Controllers
 
                 if (rowsUpdated > 0)
                 {
-                    return Ok("Schedule details updated successfully.");
+                    return Ok(new {message ="success"});
                 }
                 else
                 {
-                    return NotFound("No matching schedule details found to update.");
+                    return  Ok(new { message = "failure" });
                 }
             }
             catch (Exception ex)
@@ -110,7 +110,7 @@ namespace Staff_Scheduler_Backend.Controllers
 
 
 
-        [Authorize(Roles = "employee")]
+        [Authorize(Roles = "employee,admin")]
         [HttpPost]
         [Route("requestSwap")]
         public IActionResult requestSwap([FromBody] requestForm request)
@@ -149,7 +149,7 @@ namespace Staff_Scheduler_Backend.Controllers
             {
                 return Ok(new { message = "Swap Rejected" });
             }
-            return Ok(new { message = "unknown error" });
+            return Ok(new { message = "Reject Failed" });
         }
 
     }

@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { isLoggedInGuard } from './is-logged-in.guard';
 
-
 const routes: Routes = [
 
   { path: '', redirectTo:'login',pathMatch:'full'},
@@ -18,6 +17,7 @@ const routes: Routes = [
       import('../dashboard/dashboard.module').then((m) => m.DashboardModule),
       canActivate: [isLoggedInGuard],
   },
+
   
 ];
 

@@ -30,6 +30,8 @@ namespace Staff_Scheduler_Backend.Repository
                 string query = "SELECT shiftername FROM pending_requests WHERE shifterempid = @ShifterEmpId";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
+
+
                     command.Parameters.AddWithValue("@ShifterEmpId", swaprequestForm.shifterempid);
 
                     string temporaryName = (string)command.ExecuteScalar();
@@ -107,7 +109,7 @@ namespace Staff_Scheduler_Backend.Repository
             // Validate the schedule object (optional)
             if (schedule == null)
             {
-                throw new ArgumentNullException(nameof(schedule));
+                return 0;
             }
 
             using (SqlConnection connection = new SqlConnection(cstr))
@@ -615,7 +617,7 @@ namespace Staff_Scheduler_Backend.Repository
                 {
                     // Set the parameters
                     command.Parameters.AddWithValue("@EmpId", swaprequestForm.empID);
-                    command.Parameters.AddWithValue("@Date", swaprequestForm.date);
+                    command.Parameters.AddWithValue("@Date", swaprequestForm.date.ToString());
                     command.Parameters.AddWithValue("@Shift", swaprequestForm.shift);
                     command.Parameters.AddWithValue("@ShifterEmpId", swaprequestForm.shifterempid);
 

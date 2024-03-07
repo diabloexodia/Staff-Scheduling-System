@@ -54,20 +54,22 @@ body {
 
 .screen__background__shape1 {
 	height: 520px;
-	width: 320px;
-	background: #3d3d4b;	
+	width: 360px;
+	background: #3e3e4e;	
 	top: -50px;
 	right: 120px;	
-	border-radius: 0 72px 0 0;
+	border-radius: 72px 72px 20px 70px;
+	animation: moveside 5s ease-in-out infinite alternate;
 }
 
 .screen__background__shape2 {
 	height: 220px;
-	width: 220px;
-	background: #2e2d34;	
-	top: -172px;
-	right: 0;	
-	border-radius: 32px;
+	width: 520px;
+	background: #262143;	
+	top: -102px;
+	right:10;	
+	border-radius: 20px 32px 70px;
+	animation: moveside 5s ease-in-out infinite alternate;
 }
 
 .screen__background__shape3 {
@@ -76,17 +78,42 @@ body {
 	background: linear-gradient(270deg, #2d294f, #35344d);
 	top: -24px;
 	right: 0;	
-	border-radius: 32px;
+	border-radius: 32px 0px 0px 32px;
+	animation: moveside 5s ease-in-out infinite alternate;
 }
+@keyframes moveside {
+	from {
+	  
+		transform: translateX(90px);
+	}
+	to {
+		
+		transform: translateY(-20px);
+	}
+  }
 
 .screen__background__shape4 {
 	height: 400px;
-	width: 200px;
+	width: 300px;
 	background: #ffffff;	
 	top: 420px;
-	right: 50px;	
-	border-radius: 60px;
+	right: 1px;	
+	border-radius: 100px;
+	animation: moveside 5s ease-in-out infinite alternate;
 }
+@keyframes move {
+	from {
+	  transform: translateY(0px);
+	}
+	to {
+	  transform: translateY(-20px);
+	}
+  }
+
+
+
+
+
 
 .login {
 	width: 320px;

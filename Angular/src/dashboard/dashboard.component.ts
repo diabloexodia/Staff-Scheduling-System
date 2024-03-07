@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { myDetails } from 'src/shared/models/myDetails.interface';
 import { EmployeeService } from 'src/shared/services/employee/employee.service';
 import { CreateMessageComponent } from './my-schedules/Pages/create-message/create-message/create-message.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MenuItem, MessageService } from 'primeng/api';
-import { Dropdown } from 'primeng/dropdown';
+import { ConfirmationService, MenuItem, MessageService,ConfirmEventType } from 'primeng/api';
+import { Chart } from 'chart.js';
 import { CommunicationService } from 'src/shared/services/communications/communication.service';
 import { Table } from 'primeng/table';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -16,53 +16,14 @@ import { messageModel } from 'src/shared/models/messageModel.interface';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService,ConfirmationService]
   
 })
 export class DashboardComponent implements OnInit {
 
 
-  
-rejectSwap(schedule: any) {
-  this.scheduleService.rejectSwapDetails(schedule).subscribe((data)=>{
-    if(data.body['message']=='Swap Rejected')
-    this.showLifeLong("Swap Rejected !",true);
-        else {
-      
-      this.showLifeLong('Unknown Error',false);
-        
-        }
-  
-  })
-}
-
-
-
-acceptSwap(schedule: any) {
-this.scheduleService.acceptSwapDetails(schedule).subscribe((data)=>{
-  if(data.body['message']=='Swap Accepted')
-  this.showLifeLong("Swap Accepted !",true);
-      else {
-    
-    this.showLifeLong('Unknown Error',false);
-      
-      }
-
-})
-}
-
-
-showLifeLong(displayedMessage: string, type :boolean) {
-  //  console.log("here inside toast");
-    
-    if(type == true)
-    this.messageService.add({ severity: 'success', summary: 'Status', detail: displayedMessage, life: 2000 });
-  else
-  this.messageService.add({ severity: 'error', summary: 'Unknown Error', detail: displayedMessage, life: 2000 });
-
-
-}
   constructor(
+    private confirmationService: ConfirmationService,
     private employeeService: EmployeeService,
     private route: Router,
     private dialog: MatDialog,
@@ -102,9 +63,15 @@ showLifeLong(displayedMessage: string, type :boolean) {
   }
 
   ngOnInit(): void {
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+      history.go(1);
+    };
+
+
     this.initateEmplpoyeeDetails();
     this.getEmployeeDetails();
-    console.log("the role here ois" ,this.currentEmployeeRole);
+   
     
 if(this.currentEmployeeRole=='admin')
     this.getPendingRequests();
@@ -124,13 +91,11 @@ if(this.currentEmployeeRole=='admin')
 
   getPendingRequests() {
     this.communicationService.getPendingRequests().subscribe((data) => {
-      console.log(data);
       this.pendingRequests = data;
       //   this.messages = data;
     });
   }
 
-  
   getAllmessages() {
     this.communicationService.getAllMessages().subscribe((data) => {
    
@@ -152,7 +117,7 @@ if(this.currentEmployeeRole=='admin')
 
   getEmployeeDetails() {
     this.employeeService.getEmployee().subscribe((data) => {
-      console.log(data);
+    
       this.myDetails = data;
     });
   }
@@ -208,5 +173,62 @@ const messageModel: messageModel = { message: message };
         this.messages = this.messages.filter(msg => !msg.isRead);
         sessionStorage.setItem('messages', JSON.stringify(this.messages));
     }
+  }
+
+  
+  rejectSwap(schedule: any) {
+    this.scheduleService.rejectSwapDetails(schedule).subscribe((data)=>{
+      if(data.body['message']=='Swap Rejected'){
+
+        this.showLifeLong("Swap Rejected !",true);
+        location.reload();
+
+      }
+      
+          else {
+        
+        this.showLifeLong('Reject Failed',false);
+        location.reload();
+
+          }
+    
+    })
+  }
+  
+  
+  
+  acceptSwap(schedule: any) {
+  this.scheduleService.acceptSwapDetails(schedule).subscribe((data)=>{
+    if(data.body['message']=='Swap Accepted'){
+
+      this.showLifeLong("Swap Accepted !",true);
+      location.reload();
+
+    }
+        else {
+      
+      this.showLifeLong('Unknown Error',false);
+        
+        }
+  
+  })
+  }
+  
+  
+  showLifeLong(displayedMessage: string, type :boolean) {
+    //  console.log("here inside toast");
+      
+      if(type == true)
+      this.messageService.add({ severity: 'success', summary: 'Status', detail: displayedMessage, life: 2000 });
+    else
+    this.messageService.add({ severity: 'error', summary: 'Unknown Error', detail: displayedMessage, life: 2000 });
+  
+  
+  }
+
+@HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+    event.preventDefault();
+     window.alert('You cannot go back to the login page. Logout first');
   }
 }

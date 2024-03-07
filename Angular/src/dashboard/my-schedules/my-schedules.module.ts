@@ -22,10 +22,10 @@ import { ToastModule } from 'primeng/toast';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CreateProfileComponent } from './Pages/create-profile/create-profile.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-
+import { MetricsComponent } from './Pages/metrics/metrics.component';
 
 @NgModule({
-  declarations: [MySchedulesComponent, ManageScheduleComponent, CreateMessageComponent, CreateProfileComponent],
+  declarations: [MySchedulesComponent, ManageScheduleComponent, CreateMessageComponent, CreateProfileComponent, MetricsComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -2,12 +2,15 @@
 	<div class="screen">
 		<p-toast></p-toast>
 	  <div class="screen__content">
-		<form class="login" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+		<form class="login" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" >
 		  <div class="login__field">
 			<mat-icon class="login__icon">person</mat-icon>
-			<mat-form-field>
-			  <input matInput placeholder="Employee ID" id="empID" formControlName="username" matTooltip="Should be of the form EMPXXXXX" matTooltipPosition="below">
-			</mat-form-field>
+			<mat-form-field >
+			
+			  
+					<input matInput placeholder="Employee ID" id="empID" formControlName="username" matTooltip="Should be of the form EMPXXXXX" matTooltipPosition="below">
+
+				</mat-form-field>
 		  </div>
 		  <div class="login__field">
 			<mat-icon class="login__icon">lock</mat-icon>

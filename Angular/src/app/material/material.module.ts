@@ -41,25 +41,9 @@ import { InplaceModule } from 'primeng/inplace';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputText, InputTextModule } from 'primeng/inputtext';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-
-import { ImageModule } from 'primeng/image';
-import { KnobModule } from 'primeng/knob';
-import { ListboxModule } from 'primeng/listbox';
-import { MegaMenuModule } from 'primeng/megamenu';
-import { MenuModule } from 'primeng/menu';
-import { MenubarModule } from 'primeng/menubar';
-import { MessageModule } from 'primeng/message';
-import { MessagesModule } from 'primeng/messages';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { OrderListModule } from 'primeng/orderlist';
-import { OrganizationChartModule } from 'primeng/organizationchart';
-import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { PaginatorModule } from 'primeng/paginator';
-import { MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+
 import { StyleClassModule } from 'primeng/styleclass';
 
 @NgModule({
@@ -76,12 +60,13 @@ import { StyleClassModule } from 'primeng/styleclass';
     MatSlideToggleModule,
     MatPaginatorModule,
     MatTooltipModule,
+    ChartModule,
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
     MatPaginatorModule,
     MatButtonModule,
-    ToastModule,
+    ToastModule
   ],
 })
 export class MaterialModule {}
