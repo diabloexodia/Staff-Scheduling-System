@@ -141,6 +141,7 @@ export class MetricsComponent {
         monthlyCounts[month]++;
       }
     }
+    console.log(monthlyCounts);
 
     return monthlyCounts;
   }
@@ -240,24 +241,25 @@ export class MetricsComponent {
   csvDataReady: boolean = false;
 
   downloadCSV() {
-    // Generate the CSV content
-    let csvContent = 'data:text/csv;charset=utf-8,';
-    csvContent += 'Total Day Shifts,Total Night Shifts\n';
-    this.totalDayShift.forEach((dayShift, index) => {
-      csvContent += `${dayShift},${this.totalNightShifts[index]}\n`;
-    });
+ 
+ // Generate the CSV content
+ let csvContent = "data:text/csv;charset=utf-8,";
+ csvContent += "Total Day Shifts,Total Night Shifts\n";
+ this.totalDayShift.forEach((dayShift, index) => {
+    csvContent += `${dayShift},${this.totalNightShifts[index]}\n`;
+ });
 
-    // Create a Blob from the CSV content
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
+ // Create a Blob from the CSV content
+ const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+ const url = URL.createObjectURL(blob);
 
-    // Create a temporary anchor element to trigger the download
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'report_and_analysis.csv';
-    link.click();
+ // Create a temporary anchor element to trigger the download
+ const link = document.createElement('a');
+ link.href = url;
+ link.download = 'report_and_analysis.csv';
+ link.click();
 
-    // Clean up
-    URL.revokeObjectURL(url);
-  }
+ // Clean up
+ URL.revokeObjectURL(url);
+}
 }

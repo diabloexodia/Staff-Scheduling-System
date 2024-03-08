@@ -91,11 +91,13 @@ if(this.currentEmployeeRole=='admin')
 
   getPendingRequests() {
     this.communicationService.getPendingRequests().subscribe((data) => {
+      console.log(data);
       this.pendingRequests = data;
       //   this.messages = data;
     });
   }
 
+  
   getAllmessages() {
     this.communicationService.getAllMessages().subscribe((data) => {
    
@@ -117,7 +119,7 @@ if(this.currentEmployeeRole=='admin')
 
   getEmployeeDetails() {
     this.employeeService.getEmployee().subscribe((data) => {
-    
+      console.log(data);
       this.myDetails = data;
     });
   }
@@ -178,18 +180,13 @@ const messageModel: messageModel = { message: message };
   
   rejectSwap(schedule: any) {
     this.scheduleService.rejectSwapDetails(schedule).subscribe((data)=>{
-      if(data.body['message']=='Swap Rejected'){
-
-        this.showLifeLong("Swap Rejected !",true);
-        location.reload();
-
-      }
+      if(data.body['message']=='Swap Rejected')
+      this.showLifeLong("Swap Rejected !",true);
       
           else {
         
         this.showLifeLong('Reject Failed',false);
-        location.reload();
-
+          
           }
     
     })
@@ -199,12 +196,8 @@ const messageModel: messageModel = { message: message };
   
   acceptSwap(schedule: any) {
   this.scheduleService.acceptSwapDetails(schedule).subscribe((data)=>{
-    if(data.body['message']=='Swap Accepted'){
-
-      this.showLifeLong("Swap Accepted !",true);
-      location.reload();
-
-    }
+    if(data.body['message']=='Swap Accepted')
+    this.showLifeLong("Swap Accepted !",true);
         else {
       
       this.showLifeLong('Unknown Error',false);
@@ -229,6 +222,6 @@ const messageModel: messageModel = { message: message };
 @HostListener('window:popstate', ['$event'])
   onPopState(event) {
     event.preventDefault();
-     window.alert('You cannot go back to the login page. Logout first');
+    // window.alert('You cannot go back to the login page. Logout first');
   }
 }

@@ -19,14 +19,14 @@
   }
  .p-card-header--employee{
     display: flex !important;
-    padding: 10px !important;
+    
     flex-direction: column !important;
     align-items: center !important;
     background-color: lightpink !important;
   
   }
   .employee-container--details{
-
+    
     width: 700px !important;
   }
   .employee-container {
@@ -66,9 +66,6 @@ justify-self:flex-start;
     align-items: center;
     flex-direction: column;
   }
-.markasread{
-  background-color: rgb(34, 154, 50) !important;
-}  
 
 .justify-evenly{
   justify-content: space-evenly;

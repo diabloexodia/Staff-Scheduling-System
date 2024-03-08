@@ -7,18 +7,16 @@ import { PrimeIcons, MenuItem, MessageService } from 'primeng/api';
 import { CreateProfileComponent } from '../create-profile/create-profile.component';
 import { NavigationExtras, Router } from '@angular/router';
 import { MetricsComponent } from '../metrics/metrics.component';
-import { flatMap } from 'rxjs/operators';
-
 @Component({
   selector: 'app-manage-schedule',
   templateUrl: './manage-schedule.component.html',
   styleUrls: ['./manage-schedule.component.scss'],
-  providers: [MessageService],
+  providers: [MessageService]
 })
 export class ManageScheduleComponent implements OnInit {
-  viewMetrics() {
-    this.router.navigate(['Dashboard/Metrics']);
-  }
+viewMetrics() {
+this. router.navigate(['Dashboard/Metrics'])
+}
 
   allSchedules: any[] = [];
 
@@ -33,17 +31,17 @@ export class ManageScheduleComponent implements OnInit {
   ngOnInit(): void {
     this.getSchedules();
   }
-
+  
   constructor(
-    private router: Router,
+    private router:Router,
     private dialog: MatDialog,
     private scheduleService: SchedulingServiceService,
-    private messageService: MessageService
-  ) {}
-
-  clear(table: Table) {
-    table.clear();
-  }
+    private messageService:MessageService
+    ) {}
+    
+    clear(table: Table) {
+      table.clear();
+    }
 
   updateSchedule(schedule: any) {
     const dialogRef = this.dialog
@@ -52,15 +50,20 @@ export class ManageScheduleComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((formData) => {
-        if (formData == 'success') {
-         
 
-          this.showLifeLong('Update Successful', true, 2);
-        } else {
-          console.log('it was a failure');
-          this.showLifeLong('Update Successful', false, 2);
+        if(formData == 'success'){
+
+          console.log("it was a success");
+          
+              this.showLifeLong('Update Successful',true,2);
+            
         }
-      });
+        else{
+          console.log("it was a failure");
+          this.showLifeLong('Update Successful',false,2);
+        }
+      }
+      );
   }
   deleteSchedule(schedule) {
     if (
@@ -70,11 +73,7 @@ export class ManageScheduleComponent implements OnInit {
     ) {
       this.scheduleService.deleteScheduleDetails(schedule).subscribe((data) => {
         if (data == 'success') {
-          this.showLifeLong('Successfully Deleted !', true, 2);
-          setTimeout(function () {
-            location.reload();
-          }, 1000);
-       
+          console.log('deleted');
         } else {
           console.log('failed');
         }
@@ -84,7 +83,8 @@ export class ManageScheduleComponent implements OnInit {
 
   getSchedules() {
     this.scheduleService.getAllSchedules().subscribe((data) => {
-  
+      console.log(data);
+
       this.allSchedules = data;
       this.customers = this.allSchedules;
     });
@@ -94,60 +94,46 @@ export class ManageScheduleComponent implements OnInit {
       .open(CreateScheduleComponent)
       .afterClosed()
       .subscribe((formData) => {
-        //   console.log( " we are her " ,formData);
+        console.log( " we are her " ,formData);
 
         if (formData) {
-          if (formData == 'success') {
-            this.showLifeLong('Successfully Created !', true, 2);
-            setTimeout(function () {
-              location.reload();
-            }, 1000);
-            this.router.navigate(['/Dashboard/manageschedules']);
-          } else this.showLifeLong('Unable to Create', false, 2);
+          this.scheduleService.createSchedule(formData).subscribe((data) => {
+           // console.log(data);
+           if(data == 'success')
+           { this.showLifeLong('Successfully Created !',true,2);
+           this.router.navigate(['/Dashboard/manageschedules'])
+
+
+          }
+          else 
+          this.showLifeLong('Unable to Create',false,2);
+          });
         }
+
       });
   }
-  showLifeLong(displayedMessage: string, type: boolean, type2: number) {
-    if (type == true && type2 === 1)
-      this.messageService.add({
-        severity: 'success',
-        summary: 'New Password',
-        detail: displayedMessage,
-        life: 20000,
-      });
-    else if (type == false && type2 === 1)
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Try again',
-        detail: 'User already exist',
-        life: 2000,
-      });
-    else if (type == true && type2 === 2)
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Schedule',
-        detail: displayedMessage,
-        life: 2000,
-      });
-    else if (type == false && type2 === 2)
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Failed',
-        detail: displayedMessage,
-        life: 2000,
-      });
-  }
+  showLifeLong(displayedMessage: string, type :boolean,type2 : number) {
+    if(type == true && type2 === 1)
+    this.messageService.add({ severity: 'success', summary: 'New Password', detail: displayedMessage, life: 20000 });
+  else  if(type == false && type2 === 1)
+  this.messageService.add({ severity: 'error', summary: 'Try again', detail: 'User already exist', life: 2000 });
+  else if( type == true && type2 === 2)
+  this.messageService.add({ severity: 'success', summary: 'Schedule', detail: displayedMessage, life: 2000 });
+  else if( type == false && type2 === 2)
+  this.messageService.add({ severity: 'error', summary: 'Failed', detail: displayedMessage, life: 2000 });
+  
+}
 
   createNewProfile() {
-    this.dialog
-      .open(CreateProfileComponent)
-      .afterClosed()
-      .subscribe((response) => {
-        if (response.body['message'] == 'failure')
-          this.showLifeLong('', false, 1);
-        else if (response.body['message'] == 'success') {
-          this.showLifeLong(response.body['password'], true, 1);
-        }
-      });
-  }
+    this.dialog.open(CreateProfileComponent).afterClosed()
+    .subscribe((response)=>{
+      if(response.body['message']=='failure')
+      this.showLifeLong('',false,1);
+      else if(response.body['message']=="success"){
+        this.showLifeLong(response.body['password'],true,1);
+      
+      }
+      
+    })
+    }
 }

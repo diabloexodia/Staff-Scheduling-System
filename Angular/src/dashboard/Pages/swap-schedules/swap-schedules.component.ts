@@ -34,6 +34,7 @@ export class SwapSchedulesComponent implements OnInit {
     this.scheduleService.requestSwap(newSchedule).subscribe((response) => {
       if (response.body['message'] == 'Request Sent ')
         this.showLifeLong('Request Sent Successfully', true);
+      
       else {
         this.showLifeLong('Unknown Error', false);
       }
@@ -41,6 +42,8 @@ export class SwapSchedulesComponent implements OnInit {
   }
 
   showLifeLong(displayedMessage: string, type: boolean) {
+    //  console.log("here inside toast");
+
     if (type == true)
       this.messageService.add({
         severity: 'success',
