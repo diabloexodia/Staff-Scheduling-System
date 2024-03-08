@@ -54,7 +54,7 @@ namespace Staff_Scheduler_Backend.Controllers
             {
                 // Log the exception or handle it as needed
                 // Return a failure message
-                return BadRequest(new { message = "failure" });
+                return Ok(new { message = "failure" });
             }
         }
         [Authorize(Roles = "employee,admin")]

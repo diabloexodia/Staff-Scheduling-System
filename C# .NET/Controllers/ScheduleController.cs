@@ -92,11 +92,11 @@ namespace Staff_Scheduler_Backend.Controllers
 
                 if (rowsUpdated > 0)
                 {
-                    return Ok("Schedule details deleted successfully.");
+                    return Ok(new { message = "success" });
                 }
                 else
                 {
-                    return NotFound("No matching schedule details found to delete.");
+                    return  Ok(new { message = "failure" });
                 }
             }
             catch (Exception ex)
