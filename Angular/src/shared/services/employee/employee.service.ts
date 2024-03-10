@@ -1,19 +1,26 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { myDetails } from 'src/shared/models/myDetails.interface';
+import { scheduleDetails } from 'src/shared/models/scheduleDetails.interface';
+import { todaysSchedule } from 'src/shared/models/todaysSchedule.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
-  getSwapSchedule(empid: string, date: string, shift: string): Observable<any> {
-    return this.http.get(
-      `https://localhost:7023/swapSchedule/${empid}/${date}/${shift}`
+  getSwapSchedule(
+    empid: string,
+    date: string,
+    shift: string
+  ): Observable<scheduleDetails[]> {
+    return this.http.get<scheduleDetails[]>(
+      `${environment.baseUrl}/swapSchedule/${empid}/${date}/${shift}`
     );
   }
-  getTodaysSchedule(id: string): Observable<any> {
-    return this.http.get(`https://localhost:7023/todaysSchedule/${id}`);
+  getTodaysSchedule(id: string): Observable<todaysSchedule[]> {
+    return this.http.get<todaysSchedule[]>(`${environment.baseUrl}/todaysSchedule/${id}`);
   }
   constructor(private http: HttpClient) {}
 
@@ -27,7 +34,7 @@ export class EmployeeService {
     this.currentEmployeeId = tokenPayload['empID'];
 
     this.currentEmployeeRole = tokenPayload['role'];
-    const url = `https://localhost:7023/employees/${this.currentEmployeeId}`;
+    const url = `${environment.baseUrl}/employees/${this.currentEmployeeId}`;
 
     return this.http.get<myDetails>(url);
   }
@@ -36,7 +43,7 @@ export class EmployeeService {
     password: string;
   }): Observable<HttpResponse<string>> {
     return this.http
-      .post<string>('https://localhost:7023/login', logindata, {
+      .post<string>(`${environment.baseUrl}/login`, logindata, {
         observe: 'response',
       })
       .pipe(
@@ -49,7 +56,6 @@ export class EmployeeService {
               this.currentEmployeeRole = role;
               this.currentEmployeeId = logindata.username;
               sessionStorage.setItem('jwtToken', this.jwttoken); // Store the token in session storage
-              console.log(this.currentEmployeeRole);
             }
             return response;
           } else {
@@ -65,11 +71,9 @@ export class EmployeeService {
     Role: number;
     Email: string;
     Phone: string;
-  }) {
-    console.log(newEmployeeData);
-
+  }): Observable<HttpResponse<string>> {
     return this.http.post<string>(
-      'https://localhost:7023/newEmployeeProfile',
+      `${environment.baseUrl}/newEmployeeProfile`,
       newEmployeeData,
       {
         observe: 'response',

@@ -1,35 +1,31 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { myDetails } from 'src/shared/models/myDetails.interface';
 import { EmployeeService } from 'src/shared/services/employee/employee.service';
 import { CreateMessageComponent } from './my-schedules/Pages/create-message/create-message/create-message.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationService, MenuItem, MessageService,ConfirmEventType } from 'primeng/api';
-import { Chart } from 'chart.js';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { CommunicationService } from 'src/shared/services/communications/communication.service';
 import { Table } from 'primeng/table';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+
 import { Displayedmessages } from 'src/shared/models/Displayedmessages.interface';
 import { SchedulingServiceService } from 'src/shared/services/Schedule/scheduling-service.service';
 import { messageModel } from 'src/shared/models/messageModel.interface';
+import { swapRequestForm } from 'src/shared/models/swapRequestForm.interface';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  providers: [MessageService,ConfirmationService]
-  
+  providers: [MessageService, ConfirmationService],
 })
 export class DashboardComponent implements OnInit {
-
-
   constructor(
-    private confirmationService: ConfirmationService,
     private employeeService: EmployeeService,
     private route: Router,
     private dialog: MatDialog,
-    private scheduleService:SchedulingServiceService,
+    private scheduleService: SchedulingServiceService,
     private communicationService: CommunicationService,
-    private messageService:MessageService
+    private messageService: MessageService
   ) {}
 
   myDetails: myDetails = {
@@ -42,9 +38,9 @@ export class DashboardComponent implements OnInit {
 
   currentEmployeeId: string;
   currentEmployeeRole: string;
-  pendingRequests  =[];
-  
-  messages : Displayedmessages [];
+  pendingRequests :swapRequestForm[]=[];
+
+  messages: Displayedmessages[] = [];
   dates: any[] = [
     { year: 2024, month: 1, day: 20 },
     { year: 2024, month: 1, day: 21 },
@@ -62,54 +58,44 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     history.pushState(null, null, location.href);
     window.onpopstate = function () {
       history.go(1);
     };
 
-
     this.initateEmplpoyeeDetails();
     this.getEmployeeDetails();
-   
-    
-if(this.currentEmployeeRole=='admin')
-    this.getPendingRequests();
 
-    if(this.currentEmployeeRole=='employee'){
+    if (this.currentEmployeeRole == 'admin') this.getPendingRequests();
+
+    if (this.currentEmployeeRole == 'employee') {
       const storedMessages = sessionStorage.getItem('messages');
       if (storedMessages) {
-          // If messages are found in local storage, parse them and assign to this.messages
-          this.messages = JSON.parse(storedMessages);
+        // If messages are found in local storage, parse them and assign to this.messages
+        this.messages = JSON.parse(storedMessages);
       } else {
-          // If messages are not in local storage, fetch them from the service
-          this.getAllmessages();
+        // If messages are not in local storage, fetch them from the service
+        this.getAllmessages();
       }
     }
-    
   }
 
-  getPendingRequests() {
+  getPendingRequests(): void {
     this.communicationService.getPendingRequests().subscribe((data) => {
-      console.log(data);
       this.pendingRequests = data;
-      //   this.messages = data;
     });
   }
 
-  
-  getAllmessages() {
-    this.communicationService.getAllMessages().subscribe((data) => {
-   
-    console.log(data);
-    
-    this.messages = data.map(message => ({ mesagesValue: message, isRead: false }));
+  getAllmessages(): void {
+    this.communicationService.getAllMessages().subscribe((data: string[]) => {
+      this.messages = data.map((m) => ({ messagesValue: m, isRead: false }));
 
-    sessionStorage.setItem('messages', JSON.stringify(this.messages));
-});
+      sessionStorage.setItem('messages', JSON.stringify(this.messages));
+    });
   }
 
-  initateEmplpoyeeDetails() {
+  initateEmplpoyeeDetails(): void {
     const token = sessionStorage.getItem('jwtToken');
     const tokenPayload = JSON.parse(atob(token.split('.')[1]));
     this.currentEmployeeId = tokenPayload['empID'];
@@ -117,111 +103,108 @@ if(this.currentEmployeeRole=='admin')
     this.currentEmployeeRole = tokenPayload['role'];
   }
 
-  getEmployeeDetails() {
+  getEmployeeDetails(): void {
     this.employeeService.getEmployee().subscribe((data) => {
-      console.log(data);
       this.myDetails = data;
     });
   }
 
   isDropdownVisible = false;
-  showSidebar = false; 
+  showSidebar = false;
   toggleDropdown() {
     this.showSidebar = !this.showSidebar;
- }
+  }
 
-  onMessageClick(message) {
+  onMessageClick(message): void {
     console.log(message);
     // Handle the message click
   }
 
-  broadcastMessage() {
+  broadcastMessage(): void {
     this.dialog
       .open(CreateMessageComponent)
       .afterClosed()
       .subscribe((message) => {
         if (message) {
-          console.log(message);
-// this.communicationService.sendBroadcastMessage(message);
+          const messageModel: messageModel = { message: message };
 
-const messageModel: messageModel = { message: message };
-
-        // Pass the messageModel object to sendBroadcastMessage
-        this.communicationService.sendBroadcastMessage(messageModel).subscribe((response)=>{
-
-          if(response.body['message'] == "success")
-          {
-            this.showLifeLong("Broadcast Success",true);
-          }
-          else if(response.body['message'] == "failure")
-          this.showLifeLong("Unknown Error",false);
-        })
+          // Pass the messageModel object to sendBroadcastMessage
+          this.communicationService
+            .sendBroadcastMessage(messageModel)
+            .subscribe((response) => {
+              if (response.body['message'] == 'success') {
+                this.showLifeLong('Broadcast Success', true);
+              } else if (response.body['message'] == 'failure')
+                this.showLifeLong('Unknown Error', false);
+            });
         }
       });
   }
-  userLogout() {
+  userLogout(): void {
     sessionStorage.clear();
     this.route.navigate(['/login']);
   }
-  
-  clear(table: Table) {
+
+  clear(table: Table): void {
     table.clear();
   }
-  markAsRead(message: any) {
-    const index = this.messages.findIndex(msg => msg.messagesValue === message.messagesValue);
-    
+  markAsRead(message: any): void {
+    const index = this.messages.findIndex(
+      (msg) => msg.messagesValue === message.messagesValue
+    );
+
     if (index !== -1) {
-        this.messages[index].isRead = true;
-        this.messages = this.messages.filter(msg => !msg.isRead);
-        sessionStorage.setItem('messages', JSON.stringify(this.messages));
+      this.messages[index].isRead = true;
+      this.messages = this.messages.filter((msg) => !msg.isRead);
+      sessionStorage.setItem('messages', JSON.stringify(this.messages));
     }
   }
 
-  
-  rejectSwap(schedule: any) {
-    this.scheduleService.rejectSwapDetails(schedule).subscribe((data)=>{
-      if(data.body['message']=='Swap Rejected')
-      this.showLifeLong("Swap Rejected !",true);
-      
-          else {
-        
-        this.showLifeLong('Reject Failed',false);
-          
-          }
-    
-    })
-  }
-  
-  
-  
-  acceptSwap(schedule: any) {
-  this.scheduleService.acceptSwapDetails(schedule).subscribe((data)=>{
-    if(data.body['message']=='Swap Accepted')
-    this.showLifeLong("Swap Accepted !",true);
-        else {
-      
-      this.showLifeLong('Unknown Error',false);
-        
-        }
-  
-  })
-  }
-  
-  
-  showLifeLong(displayedMessage: string, type :boolean) {
-    //  console.log("here inside toast");
-      
-      if(type == true)
-      this.messageService.add({ severity: 'success', summary: 'Status', detail: displayedMessage, life: 2000 });
-    else
-    this.messageService.add({ severity: 'error', summary: 'Unknown Error', detail: displayedMessage, life: 2000 });
-  
-  
+  rejectSwap(schedule: swapRequestForm): void {
+    this.scheduleService.rejectSwapDetails(schedule).subscribe((data) => {
+      if (data.body['message'] == 'Swap Rejected') {
+        this.showLifeLong('Swap Rejected !', true);
+        location.reload();
+      } else {
+        this.showLifeLong('Reject Failed', false);
+        location.reload();
+      }
+    });
   }
 
-@HostListener('window:popstate', ['$event'])
+  acceptSwap(schedule: any): void {
+    this.scheduleService.acceptSwapDetails(schedule).subscribe((data) => {
+      if (data.body['message'] == 'Swap Accepted') {
+        this.showLifeLong('Swap Accepted !', true);
+        location.reload();
+      } else {
+        this.showLifeLong('Unknown Error', false);
+      }
+    });
+  }
+
+  showLifeLong(displayedMessage: string, type: boolean): void {
+    //  console.log("here inside toast");
+
+    if (type == true)
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Status',
+        detail: displayedMessage,
+        life: 2000,
+      });
+    else
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Unknown Error',
+        detail: displayedMessage,
+        life: 2000,
+      });
+  }
+
+  @HostListener('window:popstate', ['$event'])
   onPopState(event) {
     event.preventDefault();
-    // window.alert('You cannot go back to the login page. Logout first');
+    window.alert('You must Logout first !');
   }
 }

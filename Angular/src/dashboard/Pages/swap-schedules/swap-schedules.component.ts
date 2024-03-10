@@ -22,8 +22,9 @@ export class SwapSchedulesComponent implements OnInit {
   ngOnInit(): void {
     this.loadSwapSchedule();
   }
+  swapSchedule: any[] = [];
 
-  requestSwap(schedule: swapRequestForm) {
+  requestSwap(schedule: swapRequestForm):void {
     const newSchedule = {
       empID: schedule.empID,
       name: schedule.name,
@@ -34,16 +35,13 @@ export class SwapSchedulesComponent implements OnInit {
     this.scheduleService.requestSwap(newSchedule).subscribe((response) => {
       if (response.body['message'] == 'Request Sent ')
         this.showLifeLong('Request Sent Successfully', true);
-      
       else {
         this.showLifeLong('Unknown Error', false);
       }
     });
   }
 
-  showLifeLong(displayedMessage: string, type: boolean) {
-    //  console.log("here inside toast");
-
+  showLifeLong(displayedMessage: string, type: boolean):void {
     if (type == true)
       this.messageService.add({
         severity: 'success',
@@ -59,12 +57,11 @@ export class SwapSchedulesComponent implements OnInit {
         life: 20000,
       });
   }
-  clear(table: Table) {
+  clear(table: Table) :void{
     table.clear();
   }
-  swapSchedule: any[] = [];
 
-  loadSwapSchedule() {
+  loadSwapSchedule():void {
     const empid = this.swapRequestDetails.data['empid'];
     const date = this.swapRequestDetails.data['date'];
     const parts = date.split('/'); // Split the date string into an array [month, day, year]

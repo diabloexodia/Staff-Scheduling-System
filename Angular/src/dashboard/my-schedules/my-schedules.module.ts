@@ -1,4 +1,4 @@
-import { NgModule, QueryList, TemplateRef } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { MySchedulesRoutingModule } from './my-schedules-routing.module';
 import { MySchedulesComponent } from './my-schedules.component';
@@ -6,7 +6,7 @@ import { TableModule } from 'primeng/table';
 import { ManageScheduleComponent } from './Pages/manage-schedule/manage-schedule.component';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
-import { StyleClass, StyleClassModule } from 'primeng/styleclass';
+import {  StyleClassModule } from 'primeng/styleclass';
 import { CreateMessageComponent } from './Pages/create-message/create-message/create-message.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material.module';

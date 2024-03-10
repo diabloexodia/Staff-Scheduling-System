@@ -1,9 +1,7 @@
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+
+import { Component } from '@angular/core';
 import { Table } from 'primeng/table';
 import { scheduleDetails } from 'src/shared/models/scheduleDetails.interface';
-import { EmployeeService } from 'src/shared/services/employee/employee.service';
 import { SchedulingServiceService } from 'src/shared/services/Schedule/scheduling-service.service';
 
 @Component({
@@ -12,32 +10,16 @@ import { SchedulingServiceService } from 'src/shared/services/Schedule/schedulin
   styleUrls: ['./my-schedules.component.scss'],
 })
 export class MySchedulesComponent {
-
-  constructor(
-   
-    private employeeService: EmployeeService,
-    private schedulingService: SchedulingServiceService,
-    private http: HttpClient
-  ) {}
-  ngOnInit(): void {
+  constructor(private schedulingService: SchedulingServiceService) {}
+  ngOnInit() {
     const token = sessionStorage.getItem('jwtToken');
     const tokenPayload = JSON.parse(atob(token.split('.')[1]));
     const currentEmployeeId = tokenPayload['empID'];
 
-
     this.getSchedule(currentEmployeeId);
-    
   }
   mySchedule: scheduleDetails[];
 
-
-  getSchedule(id:string) {
-    this.schedulingService.getSchedule(id).subscribe((data:scheduleDetails[]) => {
-      console.log(data);
-      this.mySchedule = data;
-    });
-  }
-  
   displayedColumns: string[] = [
     'empID',
     'name',
@@ -49,8 +31,14 @@ export class MySchedulesComponent {
     'end_Time',
   ];
 
-  clear(table: Table) {
+  getSchedule(id: string): void {
+    this.schedulingService
+      .getSchedule(id)
+      .subscribe((data: scheduleDetails[]) => {
+        this.mySchedule = data;
+      });
+  }
+  clear(table: Table): void {
     table.clear();
   }
-
 }

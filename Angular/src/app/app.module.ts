@@ -4,9 +4,7 @@ import {HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TableModule } from 'primeng/table';
 import {  CardModule } from 'primeng/card';
-import { DashboardModule } from 'src/dashboard/dashboard.module';
 import { AuthInterceptor } from './auth.interceptor'; 
 import { MatTooltipModule } from '@angular/material/tooltip';
 

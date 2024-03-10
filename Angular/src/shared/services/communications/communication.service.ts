@@ -1,38 +1,36 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { messageModel } from 'src/shared/models/messageModel.interface';
+import { environment } from 'src/environments/environment';
+import { swapRequestForm } from 'src/shared/models/swapRequestForm.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CommunicationService {
-
-
-  getPendingRequests() : Observable<any>{
-    return  this.http.get("https://localhost:7023/getPendingRequests");
+  getPendingRequests(): Observable<swapRequestForm[]> {
+    return this.http.get<swapRequestForm[]>(`${environment.baseUrl}/getPendingRequests`);
   }
-  getAllMessages() : Observable<any>{
-  return  this.http.get("https://localhost:7023/getMessages");
+  getAllMessages(): Observable<string[]> {
+    return this.http.get<string[]>(`${environment.baseUrl}/getMessages`);
   }
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-
-  sendBroadcastMessage(messageModel: {message : string}){
-
+  sendBroadcastMessage(messageModel: { message: string }) :Observable<HttpResponse<string>>{
     const payload = JSON.stringify(messageModel);
 
     // Set the headers to indicate that the content type is JSON
     const headers = { 'Content-Type': 'application/json' };
 
     // Send a POST request with the JSON payload
-    return this.http.post("https://localhost:7023/latestBroadCastMessage", payload,  {
-      observe: 'response',
-      headers: headers
-    }
+    return this.http.post<string>(
+      `${environment.baseUrl}/latestBroadCastMessage`,
+      payload,
+      {
+        observe: 'response',
+        headers: headers,
+      }
     );
-  
-   
   }
 }

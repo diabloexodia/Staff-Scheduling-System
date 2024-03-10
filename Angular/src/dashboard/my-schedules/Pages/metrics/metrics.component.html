@@ -3,16 +3,14 @@
     <nav class="d-flex navigator ">
         <button mat-raised-button (click)="monthc()" >Monthly Report</button>
         <button mat-raised-button (click)="downloadCSV()" [disabled]="!csvDataReady">Download Report</button>
+        <button mat-raised-button  routerLink="/Dashboard">Back</button>
     </nav>
-
-
 </div>
 <div class="container">
 
     <div class="barclass">
         <p-chart class=" barchart " type="bar" [data]="data" [options]="options" *ngIf="condition"></p-chart>
     </div>
-
     <div class="row">
         <div class="col-md-4">
             <div class="card">
